@@ -2,31 +2,41 @@ import parseArgs from "minimist"
 
 let args = parseArgs(process.argv.slice(2))
 
-// console.log(args)
-
-function generateWhiteNote() {
-  return pickRandomFromList(["A", "B", "C", "D", "E", "F", "G"])
-  // return pickRandomFromList(['a', 'b', 'c', 'd', 'e', 'f', 'g'])
-}
-
-function generateAccidental() {
-  return pickRandomFromList(['#', 'b', ''])
-}
 
 
-function generateRandNoteScheme1(n) {
-  let out = ''
-  for(var i = 0; i<n; i++) {
-    out += generateWhiteNote()// + generateAccidental()
-    if (i < n-1) {
-      out += ", "
-    }
+const whites = ["A", "B", "C", "D", "E", "F", "G"]
+const sharps = ["A#", "B#", "C#", "D#", "E#", "F#", "G#"]
+const flats = ["Ab", "Bb", "Cb", "Db", "Eb", "Fb", "Gb"]
+
+const accidentals = ['#', 'b', '']
+
+function pickRandomFromList({list, n}) {
+  let res = []
+  for (var i = 0; i< n; i++) {
+    res.push(list[Math.floor(Math.random() * list.length)])
   }
-  return out
+  return res
 }
 
-function pickRandomFromList(array) {
-  return array[Math.floor(Math.random() * array.length)]
+function run(args) {
+  let command = args["_"][0]
+  let {n} = args
+  if (command == "whites") {
+    console.log(pickRandomFromList({
+      list: whites,
+      n,
+    }))
+  } else if (command == "whitesAndSharps") {
+    console.log(pickRandomFromList({
+      list: [...whites, ...sharps],
+      n,
+    }))
+  } else if (command = "whitesAndFlats") {
+    console.log(pickRandomFromList({
+      list: [...flats, ...whites],
+      n,
+    }))
+  }
 }
 
-console.log(generateRandNoteScheme1(4))
+run(args)
