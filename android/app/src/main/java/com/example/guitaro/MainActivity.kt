@@ -1,6 +1,8 @@
 package com.example.guitaro
 
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -35,7 +37,6 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    GuitaroTheme {
         Row {
             Image(
                 painter = painterResource(R.drawable.profile_picture),
@@ -44,18 +45,29 @@ fun Greeting(name: String) {
             Column {
                 Text(
                     text = "Hello $name!",
-                    color = MaterialTheme.colorScheme.tertiary;
-                )
+                    color = MaterialTheme.colorScheme.tertiary,
+
+
+                    )
                 Text(text = "Hello $name!")
             }
         }
-    }
 }
-
-@Preview(showBackground = true)
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "Night Mode"
+)
+@Preview(
+    uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    name = "Light Mode"
+)
 @Composable
 fun DefaultPreview() {
-    GuitaroTheme {
-        Greeting("Android")
+    Surface {
+        GuitaroTheme {
+            Greeting("Android")
+        }
     }
 }
